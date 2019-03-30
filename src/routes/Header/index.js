@@ -2,6 +2,7 @@ import React from 'react';
 import './styles.scss';
 import {MenuItem} from './MenuItem';
 import logo from '../../utils/images/logo.png';
+import {Col} from 'reactstrap';
 var links = [
     'Home',
     'Services',
@@ -14,9 +15,9 @@ export class Header extends React.Component{
         return <header>
             <div className='header-wrap'>
                 <div className='container'>
-                    <div className='logo'>
-                    <img src={logo} alt=''/>
-                    </div>
+                    <Col xs='4' className='logo'>
+                        <img src={logo} alt=''/>
+                 </Col>
                 <div className='nav'>
                         <ul>
                             {links.map(
@@ -25,7 +26,7 @@ export class Header extends React.Component{
                                 }
                             )}
                         </ul>
-                    </div>
+                </div>
                 </div>
             </div>
         </header>
