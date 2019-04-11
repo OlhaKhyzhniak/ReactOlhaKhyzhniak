@@ -3,6 +3,7 @@ import './styles.scss';
 import {MenuItem} from './MenuItem';
 import logo from '../../utils/images/logo.png';
 import {Col} from 'reactstrap';
+import axios from 'axios';
 var links = [
     'Home',
     'Services',
@@ -11,6 +12,14 @@ var links = [
     'Contact'
 ];
 export class Header extends React.Component{
+    componentDidMount(){
+        axios.get('https://api.github.com/users')
+        .then(response =>{
+            const { data } = response;
+            this.setState({users: data });
+        })
+        .catch((err)=>console.log('somethinh went wrong'));
+    }
     render(){
         return <header>
             <div className='header-wrap'>
