@@ -1,43 +1,51 @@
 import React from 'react';
 import './styles.scss';
-import {MenuItem} from './MenuItem';
 import logo from '../../utils/images/logo.png';
-import {Col} from 'reactstrap';
-import axios from 'axios';
-var links = [
-    'Home',
-    'Services',
-    'Clients',
-    'Team',
-    'Contact'
-];
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    Container} from 'reactstrap';
+    const links = [
+        'Home',
+        'Services',
+        'Clients',
+        'Team',
+        'Contact'
+    ];
 export class Header extends React.Component{
-    componentDidMount(){
-        axios.get('https://api.github.com/users')
-        .then(response =>{
-            const { data } = response;
-            this.setState({users: data });
-        })
-        .catch((err)=>console.log('somethinh went wrong'));
+    constructor(props) {
+        super(props);
+    
+        this.toggle = this.toggle.bind(this);
+        this.state = {
+        isOpen: false
+        };
+    }
+    toggle() {
+        this.setState({
+        isOpen: !this.state.isOpen
+        });
     }
     render(){
-        return <header>
-            <div className='header-wrap'>
-                <div className='container'>
-                    <Col xs='4' className='logo'>
-                        <img src={logo} alt=''/>
-                    </Col>
-                <div className='nav'>
-                        <ul>
-                            {links.map(
-                                function(item, id){
-                                    return <MenuItem name={item} key={item}/>
-                                }
-                            )}
-                        </ul>
-                </div>
-                </div>
-            </div>
+        return <header className='header'>
+                <Navbar color="primary" light expand="md">
+                <Container>
+                    <NavbarBrand href="/"><img src={logo} alt=''/></NavbarBrand>
+                    <NavbarToggler onClick={this.toggle} />
+                    <Collapse isOpen={this.state.isOpen} navbar>
+                    <Nav className="ml-auto" navbar>
+                        {links.map(item=><NavItem key={item}>
+                            <NavLink href="">{item}</NavLink>
+                        </NavItem>)}
+                    </Nav>
+                    </Collapse>
+                </Container>
+            </Navbar>
         </header>
     }
 }
