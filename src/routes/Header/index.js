@@ -26,7 +26,7 @@ export class Header extends React.Component{
                 <div className='container'>
                     <Col xs='4' className='logo'>
                         <img src={logo} alt=''/>
-                 </Col>
+                    </Col>
                 <div className='nav'>
                         <ul>
                             {links.map(
