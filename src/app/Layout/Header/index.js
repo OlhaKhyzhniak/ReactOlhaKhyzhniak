@@ -18,22 +18,17 @@ import {
         'Contact'
     ];
 export class Header extends React.Component{
-    constructor(props) {
-        super(props);
-    
-        this.toggle = this.toggle.bind(this);
-        this.state = {
+    state = {
         isOpen: false
-        };
-    }
-    toggle() {
+    };
+    toggle = () => {
         this.setState({
         isOpen: !this.state.isOpen
         });
     }
     render(){
         return <header className='header'>
-                <Navbar color="primary" light expand="md">
+                <Navbar color="light" light expand="md">
                 <Container>
                     <NavbarBrand href="/"><img src={logo} alt=''/></NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />

@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import { Layout } from './Layout';
+import { Main } from './routes';
 import './styles.scss';
-import {Header} from '../Header';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-      <Header></Header>
+        <Layout>
+          <Main></Main>
+        </Layout>
       </div>
     );
   }
