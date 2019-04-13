@@ -1,15 +1,14 @@
 import React from 'react';
+import { Col } from 'reactstrap';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import './styles.scss'
 
 export class UserComponent extends React.Component {
     render (){
         const { user } = this.props;
         return (
-            <div className='user-info'> 
-                <img src={user.avatar_url}/>
-                <h2>{`User login - ${user.avatar_url}`}</h2>
-            </div>
+            <Link to={`user/${user.login}`}></Link>
         )
     }
 }

@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
 import { Layout } from './Layout';
-import { Main } from './routes';
+import { Main, UserPage } from './routes';
 import './styles.scss';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
-class App extends Component {
+export class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Layout>
-          <Main></Main>
-        </Layout>
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Layout>
+            <Switch>
+              <Route exact path='/' component={Main} />
+              <Route path='/user:login' component={UserPage} />
+            </Switch>
+          </Layout>
+        </div>
+      </BrowserRouter>
     );
   }
 }
 
-export default App;
+

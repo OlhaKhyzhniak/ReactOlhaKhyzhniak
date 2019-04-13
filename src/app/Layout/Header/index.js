@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.scss';
-import logo from '../../utils/images/logo.png';
+import logo from '../../../utils/images/logo.png';
 import {
     Collapse,
     Navbar,
@@ -28,9 +28,9 @@ export class Header extends React.Component{
     }
     render(){
         return <header className='header'>
-                <Navbar color="light" light expand="md">
+                <Navbar color="dark" light expand="md">
                 <Container>
-                    <NavbarBrand href="/"><img src={logo} alt=''/></NavbarBrand>
+                    <NavbarBrand className='logo'><img src={logo} alt=''/></NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="ml-auto" navbar>

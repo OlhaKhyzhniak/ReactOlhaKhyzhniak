@@ -1,1 +1,2 @@
-import * from './Main';
+export * from './Main';
+export * from './UserPage';
