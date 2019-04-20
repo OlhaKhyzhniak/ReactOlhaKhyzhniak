@@ -1,31 +1,39 @@
-import React from 'react';
-import {Spinner} from 'reactstrap';
-import axios from 'axios';
+import React from "react";
+import { Col, Container, Spinner } from "reactstrap";
+import axios from "axios";
 
 export class UserPage extends React.Component {
-    state = {
-        user: null,
-        error: null
-    };
+  state = {
+    user: null
+  };
 
-    componentDidMount(){
-        const { login } = this.props.match.params;
-        if(login){
-            axios.get(`https://api.github.com/users/${login}`)
-            .then(response =>{
-                const { data } = response;
-                this.setState({users: data });
-            })
-            .catch(err=>this.props.history.push(`/404`));
-        }
+  componentDidMount() {
+    const { login } = this.props.match.params;
+    if (login) {
+      axios
+        .get(`https://api.github.com/users/${login}`)
+        .then(response => {
+          const { data } = response;
+          this.setState({ user: data });
+        })
+        .catch(err => this.props.history.push('/404'));
+    }
+  }
+
+  render() {
+    const { user } = this.state;
+
+    if (!user) {
+      return <Spinner color="secondary" />;
     }
 
-    render (){
-        const { user } = this.state;
-
-        if(!user){
-            return <Spinner color="secondary" />;
-        }
-        return {}
-    }
+    return (
+      <Container>
+        <Col>{user.name}</Col>
+        <Col>
+          <img src={user.avatar_url} alt=''/>
+        </Col>
+      </Container>
+    );
+  }
 }
