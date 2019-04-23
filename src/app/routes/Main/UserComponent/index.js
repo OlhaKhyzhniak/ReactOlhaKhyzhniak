@@ -10,9 +10,9 @@ export class UserComponent extends React.Component {
     const { user } = this.props;
     return (
             <Col sm="4" className="user-info">
-                <img src={user.avatar_url} alt="github user" />
                 <Link to={`user/${user.login}`}>
-                <p>{`User login - ${user.login}`}</p>
+                  <img src={user.avatar_url} alt="github user" />
+                  <p>{`User login - ${user.login}`}</p>
                 </Link>
             </Col>
     );

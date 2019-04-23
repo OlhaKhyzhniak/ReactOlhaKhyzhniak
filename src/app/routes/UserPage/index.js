@@ -7,16 +7,16 @@ export class UserPage extends React.Component {
     user: null
   };
 
-  componentDidMount() {
-    const { login } = this.props.match.params;
-    if (login) {
-      axios
-        .get(`https://api.github.com/users/${login}`)
-        .then(response => {
-          const { data } = response;
-          this.setState({ user: data });
-        })
-        .catch(err => this.props.history.push('/404'));
+  async componentDidMount() {
+    try {
+      const { login } = this.props.match.params;
+      if (login) {
+        const userResponse = await axios.get(`https://api.github.com/users/${login}`);
+        const reposResponse = await axios.get(`https://api.github.com/users/${login}/repos`);
+        this.setState({ user: userResponse.data, repos: reposResponse.data });
+      }
+    } catch(e){
+      this.props.history.push("/404");
     }
   }
 

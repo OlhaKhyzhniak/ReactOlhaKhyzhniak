@@ -10,14 +10,13 @@ export class Main extends React.Component {
     error: null
   };
 
-  componentDidMount() {
-    axios
-      .get("https://api.github.com/users")
-      .then(response => {
-        const { data } = response;
-        this.setState({ users: data });
-      })
-      .catch(err => this.setState({ error: err }));
+  async componentDidMount() {
+    try {
+      const { data } = await axios.get(`https://api.github.com/users/`);
+      this.setState({ user: data });
+    } catch(e){
+      this.setState({ error: e})
+    }
   }
   sortItems = () => {
       const {users, sort} = this.state;
