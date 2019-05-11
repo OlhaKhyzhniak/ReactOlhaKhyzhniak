@@ -3,28 +3,34 @@ import './styles.scss';
 import { UserComponent } from "./UserComponent";
 import { Container, Alert, Button, Col } from "reactstrap";
 import axios from "axios";
+import { connect } from "react-redux";
+import {getUsersSuccessAction, getUsersErrorAction} from '../../store/actions/users';
 
-export class Main extends React.Component {
+class MainComponent extends React.Component {
   state = {
-    users: [],
-    error: null
+    sort: null,
+    error: null,
+    isOpen: false
   };
-
-  componentDidMount() {
-    axios
-      .get("https://api.github.com/users")
-      .then(response => {
-        const { data } = response;
-        this.setState({ users: data });
-      })
-      .catch(err => this.setState({ error: err }));
+  constructor(props){
+    super(props);
+    this.butRef = React.createRef();
+  }
+  async componentDidMount() {
+    try{
+      const { data } = await axios.get("https://api.github.com/users");
+      this.props.getUsersSuccess(data);
+    } catch (e){
+      this.props.getUsersErr(e);
     }
+  }
   sortItems = () => {
-      const {users, sort} = this.state;
-      let sortedUsers = [...users];
+      const { usersData } = this.props;
+      const {sort} = this.state;
+      let sortedUsers = [...usersData];
       let sortDirection = sort;
       if (!sortDirection){
-        sortedUsers = this.state.users.sort((a, b) =>{
+        sortedUsers = usersData.sort((a, b) =>{
             const firstLogin = a.login.toLowerCase();
             const secondLogin = b.login.toLowerCase();
 
@@ -41,11 +47,12 @@ export class Main extends React.Component {
         sortedUsers = sortedUsers.reverse();
         sortDirection = 'DESC'
       }
-      this.setState({ users: sortedUsers, sort: sortDirection});
-      }
+      this.setState({ sort: sortDirection});
+      this.props.getUsersSuccess(sortedUsers);
+  }
+
   render() {
-    const { users, error } = this.state;
-    const { history } = this.props;
+    const { history, usersData, error } = this.props;
     const errorComponent = error ? (
       <Alert color="danger">Something went wrong</Alert>
     ) : null;
@@ -60,7 +67,7 @@ export class Main extends React.Component {
             </Button>
           </Col>
           <Col className="user-box">
-            {users.map((user, id) => {
+            {usersData.map((user, id) => {
               return <UserComponent user={user} key={id} history={history} />;
             })}
           </Col>
@@ -69,3 +76,18 @@ export class Main extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+   usersData: state.users.data,
+   error: state.users.err
+});
+
+const mapDispatchToProps = dispatch => ({
+  getUsersSuccess: data => dispatch(getUsersSuccessAction(data)),
+  getUsersError: err => dispatch(getUsersErrorAction(err))
+});
+
+export const Main = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MainComponent);

@@ -1,8 +1,10 @@
 import React from "react";
 import { Col, Container, Spinner } from "reactstrap";
 import axios from "axios";
+import { connect } from "react-redux";
+import {getUserSuccessAction, getUserErrorAction} from '../../store/actions/userPage';
 
-export class UserPage extends React.Component {
+class UserPageComponent extends React.Component {
   state = {
     user: null
   };
@@ -37,3 +39,17 @@ export class UserPage extends React.Component {
     );
   }
 }
+const mapStateToProp = state => ({
+   userData: state.users.data,
+   error: state.users.err
+});
+
+const mapDispatchToProp = dispatch => ({
+  getUserSuccess: data => dispatch(getUserSuccessAction(data)),
+  getUserError: err => dispatch(getUserErrorAction(err))
+});
+
+export const UserPage = connect(
+  mapStateToProp,
+  mapDispatchToProp
+)(UserPageComponent);
