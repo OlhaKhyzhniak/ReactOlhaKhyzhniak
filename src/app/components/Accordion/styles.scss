@@ -1,0 +1,15 @@
+.openAccordion{
+    height: 120px;
+    opacity: 1;
+    transition: all 1s ease-out;
+}
+  .closeAccordion{
+    opacity: 0;
+    height: 0px;
+    transition: all 1s ease-out;
+  }
+  #fade-text{
+    background-color: #61dafb;
+    padding: 20px;
+    font-size: 20px;
+  }

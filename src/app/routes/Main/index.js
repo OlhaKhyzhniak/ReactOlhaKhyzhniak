@@ -1,10 +1,11 @@
 import React from "react";
 import './styles.scss';
 import { UserComponent } from "./UserComponent";
-import { Container, Alert, Button, Col } from "reactstrap";
+import { Container, Alert, Button, Col} from "reactstrap";
 import axios from "axios";
 import { connect } from "react-redux";
 import {getUsersSuccessAction, getUsersErrorAction} from '../../store/actions/users';
+import { Accordion} from "../../components/Accordion"
 
 class MainComponent extends React.Component {
   state = {
@@ -61,6 +62,12 @@ class MainComponent extends React.Component {
       <main className="main" onClick={this.onClickHandler}>
         {errorComponent}
         <Container>
+          <Accordion
+            title="Section 1"
+            list={["list 1.1", "list 1.2"]}
+            
+            onClick={this.onClickAccordion}
+          />
           <Col className="sort-controls">
             <Button color='primary' onClick={this.sortItems}>
             Sort
